@@ -11,4 +11,14 @@ return [
     'weibo' => [
         [app\event\WeiBo::class, 'update'],
     ],
+
+    //豆瓣话题
+    'douban' => [
+        [app\event\DouBan::class, 'update'],
+    ],
+
+    //天涯热帖
+    'tianya' => [
+        [app\event\TianYa::class, 'update'],
+    ],
 ];

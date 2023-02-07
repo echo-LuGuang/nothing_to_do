@@ -8,25 +8,23 @@ use GuzzleHttp\Exception\GuzzleException;
 use support\Db;
 use QL\QueryList;
 
-class WeiBo
+class DouBan
 {
-    //微博热榜地址
-    const url = 'https://s.weibo.com/top/summary?cate=realtimehot';
+    //豆瓣话题地址
+    const url = 'https://www.douban.com/gallery/';
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36';
 
-    const type = 'weibo';
+    const type = 'douban';
 
 
     /**
-     * 更新微博热榜
+     * 更新豆瓣话题
      * @return void
      */
     public function update()
     {
         try {
-            $host = 'https://s.weibo.com';
-
             $client = new Client([
                 //允许重定向
                 'allow_redirects' => true,
@@ -37,19 +35,22 @@ class WeiBo
                     //模拟浏览器请求
                     'user-agent' => self::userAgent,
                     //cookie
-                    'cookie' => 'SUB=_2AkMUvoH0f8NxqwFRmP4SxWrnb451yQzEieKi4nAvJRMxHRl-yT9jqh1YtRB6Pz6vG53IuuNcVmtx7SWagTBey1bXoRF8; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9WWir9y7UWdySP8OAUxCzbNI'
+                    'cookie' => 'bid=YUl46w92vGM; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1675760501%2C%22https%3A%2F%2Fmomoyu.cc%2F%22%5D; _pk_ses.100001.8cb4=*; ap_v=0,6.0; ll="108090"; __utma=30149280.688369536.1675760505.1675760505.1675760505.1; __utmc=30149280; __utmz=30149280.1675760505.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; _pk_id.100001.8cb4=c20a119c98541b78.1675760501.1.1675760544.1675760501.; __utmb=30149280.4.10.1675760505'
                 ]
             ])->getBody()->getContents();
 
             $ql = new QueryList();
 
             //解析html
-            $table = $ql->html($html)->find('table:eq(0)');
+            $ul = $ql->html($html)->find('.trend');
 
-            $insertData = $table->find('tr:gt(1)')->map(function ($row) use ($host) {
-                $title = $row->find('td:eq(1)>a')->text();
-                $subtitle = $row->find('td:eq(1)>span')->text();
-                $url = $host . $row->find('td:eq(1)>a')->attr('href');
+            $insertData = $ul->find('li')->map(function ($row) {
+                $title = $row->find('a')->text();
+                $subtitle = $row->find('span')->text();
+                $url = $row->find('a')->attr('href');
+
+                //去除“次浏览”
+                $subtitle = str_replace('次浏览', '', $subtitle);
 
                 return [
                     'title' => $title,
@@ -57,6 +58,7 @@ class WeiBo
                     'subtitle' => $subtitle,
                     'type' => self::type
                 ];
+
             })->filter()->values()->toArray();
 
             //开启事务
@@ -69,11 +71,11 @@ class WeiBo
 
             //提交事务
             Db::commit();
-            dump(date('Y-m-d H:i:s') . '更新微博热榜成功');
+            dump(date('Y-m-d H:i:s') . '更新豆瓣话题成功');
         } catch (GuzzleException|\Exception $exception) {
             //回滚事务
             Db::rollBack();
-            dump('更新微博热榜异常：' . $exception->getMessage());
+            dump('更新豆瓣话题异常：' . $exception->getMessage());
             dump($exception);
         }
     }

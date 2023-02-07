@@ -1,12 +1,13 @@
 <?php
 
+use app\controller\IndexController;
 use app\middleware\AuthMiddleware;
 use Webman\Route;
 
 Route::group('/api/v1/', function () {
 
 
-    Route::get('index', [\app\controller\IndexController::class, 'index']);
+    Route::get('index', [IndexController::class, 'index']);
 
     //需要登录的接口
     Route::group(function () {
