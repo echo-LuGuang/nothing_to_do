@@ -2,8 +2,10 @@
 
 namespace app\event;
 
+use app\model\Article;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use support\Db;
 
 class ZhiHu
 {
@@ -12,6 +14,8 @@ class ZhiHu
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36';
 
+    const type = 'zhihu';
+
     /**
      * 更新知乎热榜
      * @return void
@@ -19,6 +23,9 @@ class ZhiHu
     public function update($data)
     {
         try {
+            //开启事务
+            Db::beginTransaction();
+
             $client = new Client();
 
             $res = json_decode($client->get(self::url, [
@@ -28,11 +35,33 @@ class ZhiHu
                 ]
             ])->getBody()->getContents(), true);
 
-            dump($res);
+            $insertData = [];
+
+            foreach ($res['data'] as $item) {
+                $title = $item['question']['title'];
+                $url = $item['question']['url'];
+                $pv = $item['reaction']['pv'];
+                $insertData[] = [
+                    'title' => $title,
+                    'url' => $url,
+                    'pv' => $pv,
+                    'type' => self::type
+                ];
+            }
+
+            //删除原来的旧数据
+            Article::query()->where('type', self::type)->delete();
+            //添加新的数据
+            Article::query()->insert($insertData);
+
+            //提交事务
+            Db::commit();
+            dump(date('Y-m-d H:i:s') . '更新知乎热榜成功');
         } catch (GuzzleException|\Exception $exception) {
+            //回滚事务
+            Db::rollBack();
             dump('更新知乎热榜异常：' . $exception->getMessage());
             dump($exception);
         }
-
     }
 }
