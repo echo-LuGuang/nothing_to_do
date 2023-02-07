@@ -21,4 +21,14 @@ return [
     'tianya' => [
         [app\event\TianYa::class, 'update'],
     ],
+
+    //虎扑步行街
+    'hupu' => [
+        [app\event\HuPu::class, 'update'],
+    ],
+
+    //今日头条
+    'toutiao' => [
+        [app\event\TouTiao::class, 'update'],
+    ],
 ];
