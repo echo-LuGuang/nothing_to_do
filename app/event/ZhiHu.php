@@ -20,12 +20,9 @@ class ZhiHu
      * 更新知乎热榜
      * @return void
      */
-    public function update($data)
+    public function update()
     {
         try {
-            //开启事务
-            Db::beginTransaction();
-
             $client = new Client();
 
             $res = json_decode($client->get(self::url, [
@@ -40,14 +37,17 @@ class ZhiHu
             foreach ($res['data'] as $item) {
                 $title = $item['question']['title'];
                 $url = $item['question']['url'];
-                $pv = $item['reaction']['pv'];
+                $subtitle = $item['reaction']['pv'];
                 $insertData[] = [
                     'title' => $title,
                     'url' => $url,
-                    'pv' => $pv,
+                    'subtitle' => $subtitle,
                     'type' => self::type
                 ];
             }
+
+            //开启事务
+            Db::beginTransaction();
 
             //删除原来的旧数据
             Article::query()->where('type', self::type)->delete();
