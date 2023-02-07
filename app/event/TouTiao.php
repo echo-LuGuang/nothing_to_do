@@ -48,8 +48,6 @@ class TouTiao
                 ];
             }
 
-            dump($insertData);
-
             //开启事务
             Db::beginTransaction();
 
