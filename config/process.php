@@ -38,5 +38,9 @@ return [
                 'enable_memory_monitor' => DIRECTORY_SEPARATOR === '/',
             ]
         ]
+    ],
+
+    'updateHotList' => [
+        'handler' => process\UpdateHotListTask::class
     ]
 ];

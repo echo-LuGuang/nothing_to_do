@@ -36,7 +36,10 @@
     "webman/redis-queue": "^1.2",
     "vlucas/phpdotenv": "^5.5",
     "ext-json": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "webman/event": "^1.0",
+    "guzzlehttp/guzzle": "^7.5",
+    "workerman/crontab": "^1.0"
   },
   "suggest": {
     "ext-event": "For better performance. "

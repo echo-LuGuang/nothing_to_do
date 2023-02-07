@@ -2,7 +2,7 @@
 /.vscode
 /vendor
 *.log
-.env
+./.env
 /tests/tmp
 /tests/.phpunit.result.cache
 /runtime
