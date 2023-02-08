@@ -27,7 +27,7 @@ $ composer install
 ```
 
 ```
-copy .env.example .env
+$ copy .env.example .env
 
 修改.env配置
 ```
