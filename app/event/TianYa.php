@@ -6,6 +6,7 @@ use app\model\Article;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use support\Db;
+use support\Redis;
 
 class TianYa
 {
@@ -59,6 +60,13 @@ class TianYa
             Article::query()->where('type', self::type)->delete();
             //添加新的数据
             Article::query()->insert($insertData);
+
+            //redis缓存
+            Redis::set(self::type, json_encode($insertData, JSON_UNESCAPED_UNICODE));
+
+            //redis缓存 记录更新时间
+            $time = date('Y-m-d H:i:s');
+            Redis::set(self::type . 'time', $time);
 
             //提交事务
             Db::commit();

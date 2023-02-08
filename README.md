@@ -32,6 +32,8 @@ $ composer install
 $ copy .env.example .env
 
 修改.env配置
+
+修改 config/redis.php
 ```
 
 Linux：

@@ -40,7 +40,8 @@
     "webman/event": "^1.0",
     "guzzlehttp/guzzle": "^7.5",
     "workerman/crontab": "^1.0",
-    "jaeger/querylist": "^4.2"
+    "jaeger/querylist": "^4.2",
+    "illuminate/redis": "^8.83"
   },
   "suggest": {
     "ext-event": "For better performance. "

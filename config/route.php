@@ -6,8 +6,13 @@ use Webman\Route;
 
 Route::group('/api/v1/', function () {
 
+    Route::get('test', [IndexController::class, 'test']);
 
+    //全部列表
     Route::get('index', [IndexController::class, 'index']);
+
+    //详情
+    Route::get('detail/{name}', [IndexController::class, 'detail']);
 
     //需要登录的接口
     Route::group(function () {
