@@ -35,11 +35,17 @@ $ copy .env.example .env
 ```
 
 Linux：
+
 ```
 $ php start.php start
 ```
 
 Windows：
+
 ```
 $ windows.bat
 ```
+
+### 最后
+
+`如果您喜欢这个项目，还请您为它点一个star⭐`
