@@ -2,6 +2,7 @@
 
 use app\controller\IndexController;
 use app\middleware\AuthMiddleware;
+use app\middleware\CORSMiddleware;
 use Webman\Route;
 
 Route::group('/api/v1/', function () {
@@ -18,7 +19,8 @@ Route::group('/api/v1/', function () {
     Route::group(function () {
 
     })->middleware(AuthMiddleware::class);
-});
+
+})->middleware(CORSMiddleware::class);
 
 //自定义404
 Route::fallback(fn() => json(['code' => 404, 'msg' => 'not found']));
