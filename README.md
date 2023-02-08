@@ -14,6 +14,10 @@ $ git clone *****
 $ composer install
 ```
 
+```
+修改.env
+```
+
 Linux：
 ```
 $ php start.php start
