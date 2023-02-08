@@ -37,7 +37,6 @@ class UpdateHotListTask
             Event::emit('hupu', null);
 
             dump(date('Y-m-d H:i:s') . '更新知乎热榜开始');
-            //发布事件
             Event::emit('zhihu', null);
         });
     }
