@@ -13,7 +13,7 @@
  */
 
 return [
-    'listen' => 'http://0.0.0.0:8787',
+    'listen' => 'http://0.0.0.0:8004',
     'transport' => 'tcp',
     'context' => [],
     'name' => 'jlxsc',
