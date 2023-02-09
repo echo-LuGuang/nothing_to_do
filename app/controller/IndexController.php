@@ -34,6 +34,11 @@ class IndexController extends BaseController
             'color' => '#2d34d6'
         ],
         [
+            'type' => Bilibili::type,
+            'name' => 'B站',
+            'color' => '#4ba5db'
+        ],
+        [
             'type' => TouTiao::type,
             'name' => '今日头条',
             'color' => '#FF2F49'
