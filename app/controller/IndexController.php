@@ -6,6 +6,7 @@ use app\event\BaiDu;
 use app\event\Bilibili;
 use app\event\DouBan;
 use app\event\HuPu;
+use app\event\Itzhijia;
 use app\event\TianYa;
 use app\event\TouTiao;
 use app\event\WeiBo;
@@ -63,7 +64,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(Bilibili::type, null);
+        Event::emit(Itzhijia::type, null);
         return $this->success();
     }
 
@@ -91,120 +92,14 @@ class IndexController extends BaseController
             return $this->error('分类不存在');
         }
 
-        $data = $this->$name();
+        $data = Redis::get($name);
+
+        if (!empty($data)) {
+            $data = json_decode($data, true);
+        } else {
+            $data = Article::query()->where('type', $name)->orderBy('id')->get();
+        }
 
         return $this->success($data);
-    }
-
-    //获取知乎列表
-    public function zhihu(): array
-    {
-        $data = Redis::get(ZhiHu::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', ZhiHu::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //获取头条列表
-    public function toutiao(): array
-    {
-        $data = Redis::get(TouTiao::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', TouTiao::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //获取虎扑列表
-    public function hupu(): array
-    {
-        $data = Redis::get(HuPu::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', HuPu::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //获取微博列表
-    public function weibo(): array
-    {
-        $data = Redis::get(WeiBo::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', WeiBo::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //获取豆瓣列表
-    public function douban(): array
-    {
-        $data = Redis::get(DouBan::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', DouBan::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //获取天涯列表
-    public function tianya(): array
-    {
-        $data = Redis::get(TianYa::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', TianYa::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //获取百度列表
-    public function baidu(): array
-    {
-        $data = Redis::get(BaiDu::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', BaiDu::type)->orderBy('id')->get();
-        }
-
-        return $data;
-    }
-
-    //b站
-    public function bilibili(): array
-    {
-        $data = Redis::get(Bilibili::type);
-
-        if (!empty($data)) {
-            $data = json_decode($data, true);
-        } else {
-            $data = Article::query()->where('type', Bilibili::type)->orderBy('id')->get();
-        }
-
-        return $data;
     }
 }
