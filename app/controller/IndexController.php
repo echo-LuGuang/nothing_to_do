@@ -19,26 +19,32 @@ class IndexController extends BaseController
         [
             'type' => ZhiHu::type,
             'name' => '知乎热榜',
+            'color' => '#0177D7'
         ],
         [
             'type' => WeiBo::type,
             'name' => '微博热搜',
+            'color' => '#E30E24'
         ],
         [
             'type' => TouTiao::type,
             'name' => '今日头条',
+            'color' => '#FF2F49'
         ],
         [
             'type' => DouBan::type,
             'name' => '豆瓣热话',
+            'color' => '#2e963d'
         ],
         [
             'type' => TianYa::type,
             'name' => '天涯热帖',
+            'color' => '#4A86D0'
         ],
         [
             'type' => HuPu::type,
             'name' => '虎扑步行街',
+            'color' => '#C50100'
         ],
     ];
 
