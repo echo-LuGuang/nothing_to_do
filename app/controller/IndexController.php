@@ -59,6 +59,11 @@ class IndexController extends BaseController
             'name' => '虎扑步行街',
             'color' => '#C50100'
         ],
+        [
+            'type' => Itzhijia::type,
+            'name' => 'IT之家',
+            'color' => '#c1352d'
+        ],
     ];
 
     public function test(): Response
@@ -75,7 +80,8 @@ class IndexController extends BaseController
         $data = [];
         foreach ($this->cate as $item) {
             $item['time'] = parseTimeLine(Redis::get($item['type'] . 'time'));
-            $item['list'] = $this->{$item['type']}();
+            $res = $this->detail($item['type']);
+            $item['list'] = json_decode($res->rawBody(), true)['data'];
             $data[] = $item;
         }
 

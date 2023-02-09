@@ -11,7 +11,7 @@ use support\Redis;
 
 class Itzhijia
 {
-    //it之家步行街地址
+    //it之家地址
     const url = 'https://m.ithome.com/rankm/';
 
     const userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1';
@@ -42,14 +42,12 @@ class Itzhijia
             $ql = new QueryList();
 
             //解析html
-            $div = $ql->html($html)->find('.rank-box');
+            $div = $ql->html($html)->find('.rank-box:eq(0)');
 
-            dump($div->getString());
-
-            $insertData = $div->find('.rank-item')->map(function ($row) {
-                $title = $row->find('.info>a')->text();
-                $subtitle = $row->find('.info .detail .detail-state>.data-box:eq(0)')->text();
-                $url = $row->find('.info>a')->attr('href');
+            $insertData = $div->find('>div')->map(function ($row) {
+                $title = $row->find('a .plc-title')->text();
+                $subtitle = $row->find('a .review-num')->text();
+                $url = $row->find('a')->attr('href');
 
                 return [
                     'title' => $title,

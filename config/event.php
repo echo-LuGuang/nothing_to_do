@@ -40,5 +40,10 @@ return [
     //b站
     'bilibili' => [
         [app\event\Bilibili::class, 'update']
+    ],
+
+    //b站
+    'itzhijia' => [
+        [app\event\Itzhijia::class, 'update']
     ]
 ];
