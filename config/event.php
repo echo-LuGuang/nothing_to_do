@@ -36,4 +36,9 @@ return [
     'baidu' => [
         [app\event\BaiDu::class, 'update'],
     ],
+
+    //b站
+    'bilibili' => [
+        [app\event\Bilibili::class, 'update']
+    ]
 ];

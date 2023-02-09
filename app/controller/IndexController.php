@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\event\BaiDu;
+use app\event\Bilibili;
 use app\event\DouBan;
 use app\event\HuPu;
 use app\event\TianYa;
@@ -57,7 +58,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(BaiDu::type, null);
+        Event::emit(Bilibili::type, null);
         return $this->success();
     }
 
@@ -183,6 +184,20 @@ class IndexController extends BaseController
             $data = json_decode($data, true);
         } else {
             $data = Article::query()->where('type', BaiDu::type)->orderBy('id')->get();
+        }
+
+        return $data;
+    }
+
+    //b站
+    public function bilibili(): array
+    {
+        $data = Redis::get(Bilibili::type);
+
+        if (!empty($data)) {
+            $data = json_decode($data, true);
+        } else {
+            $data = Article::query()->where('type', Bilibili::type)->orderBy('id')->get();
         }
 
         return $data;
