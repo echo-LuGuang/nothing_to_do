@@ -51,7 +51,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(ZhiHu::type, null);
+        Event::emit(HuPu::type, null);
         return $this->success();
     }
 

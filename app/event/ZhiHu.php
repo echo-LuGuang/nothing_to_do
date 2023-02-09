@@ -47,6 +47,8 @@ class ZhiHu
                 ];
             }
 
+            if (empty($insertData)) return;
+
             //开启事务
             Db::beginTransaction();
 
