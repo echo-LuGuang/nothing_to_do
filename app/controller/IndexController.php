@@ -173,4 +173,18 @@ class IndexController extends BaseController
 
         return $data;
     }
+
+    //获取百度列表
+    public function baidu(): array
+    {
+        $data = Redis::get(BaiDu::type);
+
+        if (!empty($data)) {
+            $data = json_decode($data, true);
+        } else {
+            $data = Article::query()->where('type', BaiDu::type)->orderBy('id')->get();
+        }
+
+        return $data;
+    }
 }
