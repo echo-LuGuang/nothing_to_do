@@ -42,7 +42,7 @@ return [
         [app\event\Bilibili::class, 'update']
     ],
 
-    //b站
+    //it之家
     'itzhijia' => [
         [app\event\Itzhijia::class, 'update']
     ]

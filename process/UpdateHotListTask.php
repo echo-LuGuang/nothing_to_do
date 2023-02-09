@@ -44,6 +44,16 @@ class UpdateHotListTask
         new Crontab('0 */12 * * * *', function () {
             dump(date('Y-m-d H:i:s') . '更新百度开始');
             Event::emit('baidu', null);
+
+            dump(date('Y-m-d H:i:s') . '更新b站开始');
+            Event::emit('bilibili', null);
+        });
+
+        // 每13分钟执行一次
+        new Crontab('0 */13 * * * *', function () {
+            dump(date('Y-m-d H:i:s') . '更新it之家开始');
+            Event::emit('itzhijia', null);
+
         });
     }
 }
