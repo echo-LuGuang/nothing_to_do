@@ -39,5 +39,11 @@ class UpdateHotListTask
             dump(date('Y-m-d H:i:s') . '更新知乎热榜开始');
             Event::emit('zhihu', null);
         });
+
+        // 每12分钟执行一次
+        new Crontab('0 */12 * * * *', function () {
+            dump(date('Y-m-d H:i:s') . '更新百度开始');
+            Event::emit('baidu', null);
+        });
     }
 }

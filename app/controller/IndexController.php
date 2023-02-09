@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\event\BaiDu;
 use app\event\DouBan;
 use app\event\HuPu;
 use app\event\TianYa;
@@ -25,6 +26,11 @@ class IndexController extends BaseController
             'type' => WeiBo::type,
             'name' => '微博热搜',
             'color' => '#E30E24'
+        ],
+        [
+            'type' => BaiDu::type,
+            'name' => '百度热搜',
+            'color' => '#2d34d6'
         ],
         [
             'type' => TouTiao::type,
@@ -51,7 +57,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(HuPu::type, null);
+        Event::emit(BaiDu::type, null);
         return $this->success();
     }
 

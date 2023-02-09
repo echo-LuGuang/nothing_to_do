@@ -31,4 +31,9 @@ return [
     'toutiao' => [
         [app\event\TouTiao::class, 'update'],
     ],
+
+    //百度
+    'baidu' => [
+        [app\event\BaiDu::class, 'update'],
+    ],
 ];
