@@ -16,6 +16,7 @@ GuzzleHttp网络请求
 QueryList识别html
 api接口
 nginx反向代理
+GuzzleHttp网络代理请求（翻墙需求）
 ````
 
 ### 安装
