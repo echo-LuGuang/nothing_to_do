@@ -24,6 +24,10 @@ class Maimai
     public function update()
     {
         try {
+
+            //脉脉字数限制
+            $text_num = 100;
+
             $client = new Client([
                 //允许重定向
                 'allow_redirects' => true,
@@ -43,14 +47,14 @@ class Maimai
 
                 if (isset($value['style1'])) {
                     $title = $value['style1']['text'];
-                    if (mb_strlen($title) > 150) {
-                        $title = mb_substr($title, 0, 150) . '...';
+                    if (mb_strlen($title) > $text_num) {
+                        $title = mb_substr($title, 0, $text_num) . '...';
                     }
                     $url = 'https://maimai.cn/web/feed_detail?fid=' . $value['id'] . '&efid=' . $value['efid'];
                 } else if (isset($value['style44'])) {
                     $title = $value['style44']['text'];
-                    if (mb_strlen($title) > 150) {
-                        $title = mb_substr($title, 0, 150) . '...';
+                    if (mb_strlen($title) > $text_num) {
+                        $title = mb_substr($title, 0, $text_num) . '...';
                     }
                     $url = $value['style44']['share_url'];
                 } else {
