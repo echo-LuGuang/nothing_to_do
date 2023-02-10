@@ -79,7 +79,7 @@ class Tieba
 
             //提交事务
             Db::commit();
-            dump(date('Y-m-d H:i:s') . '更新贴吧成功');
+            dump(date('Y-m-d H:i:s') . '更新' . self::type . '成功');
         } catch (GuzzleException|\Exception $exception) {
             //回滚事务
             Db::rollBack();
