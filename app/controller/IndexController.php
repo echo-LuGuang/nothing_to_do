@@ -12,6 +12,7 @@ use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
+use app\event\V2ex;
 use app\event\WeiBo;
 use app\event\ZhiHu;
 use app\model\Article;
@@ -82,12 +83,17 @@ class IndexController extends BaseController
             'name' => 'IT之家',
             'color' => '#c1352d'
         ],
+        [
+            'type' => V2ex::type,
+            'name' => 'V2ex',
+            'color' => '#272727'
+        ],
     ];
 
     public function test(): Response
     {
         //发布事件
-        Event::emit(Maimai::type, null);
+        Event::emit(V2ex::type, null);
         return $this->success();
     }
 

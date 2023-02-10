@@ -11,6 +11,7 @@ use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
+use app\event\V2ex;
 use app\event\WeiBo;
 use app\event\ZhiHu;
 
@@ -73,5 +74,10 @@ return [
     //脉脉
     Maimai::type => [
         [Maimai::class, 'update']
+    ],
+
+    //v2ex
+    V2ex::type => [
+        [V2ex::class, 'update']
     ],
 ];

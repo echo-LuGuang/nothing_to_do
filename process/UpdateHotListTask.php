@@ -12,6 +12,7 @@ use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
+use app\event\V2ex;
 use app\event\WeiBo;
 use app\event\ZhiHu;
 use Webman\Event\Event;
@@ -72,6 +73,13 @@ class UpdateHotListTask
 
             dump(date('Y-m-d H:i:s') . '更新' . Itzhijia::type . '开始');
             Event::emit(Itzhijia::type, null);
+        });
+
+        // 每30分钟执行一次
+        new Crontab('0 */30 * * * *', function () {
+            dump(date('Y-m-d H:i:s') . '更新' . V2ex::type . '开始');
+            Event::emit(V2ex::type, null);
+
         });
 
     }
