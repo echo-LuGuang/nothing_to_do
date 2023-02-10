@@ -8,18 +8,17 @@ use GuzzleHttp\Exception\GuzzleException;
 use support\Db;
 use support\Redis;
 
-class BilibiliHot
+//脉脉
+class Maimai
 {
-    //b站地址
-    const url = 'https://api.bilibili.com/x/web-interface/popular?ps=50&pn=1';
+    const url = 'https://maimai.cn/sdk/web/content/get_list?api=feed/v5/nd1feed';
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36';
 
-    const type = 'bilibiliHot';
+    const type = 'maimai';
 
 
     /**
-     * 更新b站
      * @return void
      */
     public function update()
@@ -33,21 +32,30 @@ class BilibiliHot
             $data = json_decode($client->get(self::url, [
                 'headers' => [
                     //模拟浏览器请求
-                    'user-agent' => self::userAgent,
-                    'cookie' => 'buvid3=A8FDD5D4-9F94-AD91-C888-920C1C627D4F18454infoc; b_nut=1675924818; _uuid=D5236B58-27D3-DC4D-4F49-23C6FD5A7AC318778infoc; buvid_fp=6f89fc5eb24e4cf8feced2765e74cb80; buvid4=4D7B9B0C-02FE-0939-D83A-6010D35EBBB420301-023020914-KxUcNPBJu7UmRVVupymsBA%3D%3D'
+                    'user-agent' => self::userAgent
                 ]
             ])->getBody()->getContents(), true);
 
-
-            if ($data['code'] !== 0) throw new \Exception('更新b站热门失败');
-
+            if (!$data['result']) throw new \Exception('更新' . self::type . '失败');
 
             $insertData = [];
-            foreach ($data['data']['list'] as $value) {
+            foreach ($data['list'] as $value) {
+
+                if (isset($value['style1'])) {
+                    $title = mb_substr($value['style1']['text'], 0, 255);
+                    $url = 'https://maimai.cn/web/feed_detail?fid=' . $value['id'] . '&efid=' . $value['efid'];
+                } else if (isset($value['style44'])) {
+                    $title = mb_substr($value['style44']['text'], 0, 255);
+                    $url = $value['style44']['share_url'];
+                } else {
+                    //其他的类型是广告
+                    continue;
+                }
+
                 $insertData[] = [
-                    'title' => $value['title'],
-                    'url' => $value['short_link'],
-                    'subtitle' => $value['stat']['view'],
+                    'url' => $url,
+                    'title' => $title,
+                    'subtitle' => '',
                     'type' => self::type
                 ];
             }

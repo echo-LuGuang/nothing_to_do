@@ -7,6 +7,7 @@ use app\event\BilibiliHot;
 use app\event\DouBan;
 use app\event\HuPu;
 use app\event\Itzhijia;
+use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
@@ -67,5 +68,10 @@ return [
     //b站综合热门
     BilibiliHot::type => [
         [BilibiliHot::class, 'update']
+    ],
+
+    //脉脉
+    Maimai::type => [
+        [Maimai::class, 'update']
     ],
 ];

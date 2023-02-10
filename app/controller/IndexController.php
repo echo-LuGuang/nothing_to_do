@@ -8,6 +8,7 @@ use app\event\BilibiliHot;
 use app\event\DouBan;
 use app\event\HuPu;
 use app\event\Itzhijia;
+use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
@@ -62,6 +63,11 @@ class IndexController extends BaseController
             'color' => '#2a31d7'
         ],
         [
+            'type' => Maimai::type,
+            'name' => '脉脉发现',
+            'color' => '#2151f5'
+        ],
+        [
             'type' => TianYa::type,
             'name' => '天涯热帖',
             'color' => '#4A86D0'
@@ -81,7 +87,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(BilibiliHot::type, null);
+        Event::emit(Maimai::type, null);
         return $this->success();
     }
 
