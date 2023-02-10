@@ -4,10 +4,12 @@ namespace app\controller;
 
 use app\event\BaiDu;
 use app\event\Bilibili;
+use app\event\BilibiliHot;
 use app\event\DouBan;
 use app\event\HuPu;
 use app\event\Itzhijia;
 use app\event\TianYa;
+use app\event\Tieba;
 use app\event\TouTiao;
 use app\event\WeiBo;
 use app\event\ZhiHu;
@@ -40,6 +42,11 @@ class IndexController extends BaseController
             'color' => '#4ba5db'
         ],
         [
+            'type' => BilibiliHot::type,
+            'name' => 'B站综合热门',
+            'color' => '#4ba5db'
+        ],
+        [
             'type' => TouTiao::type,
             'name' => '今日头条',
             'color' => '#FF2F49'
@@ -48,6 +55,11 @@ class IndexController extends BaseController
             'type' => DouBan::type,
             'name' => '豆瓣热话',
             'color' => '#2e963d'
+        ],
+        [
+            'type' => Tieba::type,
+            'name' => '贴吧热议',
+            'color' => '#2a31d7'
         ],
         [
             'type' => TianYa::type,
@@ -69,7 +81,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(Itzhijia::type, null);
+        Event::emit(BilibiliHot::type, null);
         return $this->success();
     }
 

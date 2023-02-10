@@ -1,49 +1,71 @@
 <?php
 
 
+use app\event\BaiDu;
+use app\event\Bilibili;
+use app\event\BilibiliHot;
+use app\event\DouBan;
+use app\event\HuPu;
+use app\event\Itzhijia;
+use app\event\TianYa;
+use app\event\Tieba;
+use app\event\TouTiao;
+use app\event\WeiBo;
+use app\event\ZhiHu;
+
 return [
     //知乎热榜
-    'zhihu' => [
-        [app\event\ZhiHu::class, 'update'],
+    ZhiHu::type => [
+        [ZhiHu::class, 'update'],
     ],
 
     //微博热榜
-    'weibo' => [
-        [app\event\WeiBo::class, 'update'],
+    WeiBo::type => [
+        [WeiBo::class, 'update'],
     ],
 
     //豆瓣话题
-    'douban' => [
-        [app\event\DouBan::class, 'update'],
+    DouBan::type => [
+        [DouBan::class, 'update'],
     ],
 
     //天涯热帖
-    'tianya' => [
-        [app\event\TianYa::class, 'update'],
+    TianYa::type => [
+        [TianYa::class, 'update'],
     ],
 
     //虎扑步行街
-    'hupu' => [
-        [app\event\HuPu::class, 'update'],
+    HuPu::type => [
+        [HuPu::class, 'update'],
     ],
 
     //今日头条
-    'toutiao' => [
-        [app\event\TouTiao::class, 'update'],
+    TouTiao::type => [
+        [TouTiao::class, 'update'],
     ],
 
     //百度
-    'baidu' => [
-        [app\event\BaiDu::class, 'update'],
+    BaiDu::type => [
+        [BaiDu::class, 'update'],
     ],
 
     //b站
-    'bilibili' => [
-        [app\event\Bilibili::class, 'update']
+    Bilibili::type => [
+        [Bilibili::class, 'update']
     ],
 
     //it之家
-    'itzhijia' => [
-        [app\event\Itzhijia::class, 'update']
-    ]
+    Itzhijia::type => [
+        [Itzhijia::class, 'update']
+    ],
+
+    //贴吧
+    Tieba::type => [
+        [Tieba::class, 'update']
+    ],
+
+    //b站综合热门
+    BilibiliHot::type => [
+        [BilibiliHot::class, 'update']
+    ],
 ];
