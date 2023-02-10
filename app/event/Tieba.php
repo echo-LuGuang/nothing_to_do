@@ -83,7 +83,7 @@ class Tieba
         } catch (GuzzleException|\Exception $exception) {
             //回滚事务
             Db::rollBack();
-            dump('更新贴吧异常：' . $exception->getMessage());
+            dump('更新' . self::type . '异常：' . $exception->getMessage());
             dump($exception);
         }
     }

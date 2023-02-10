@@ -83,7 +83,7 @@ class WeiBo
         } catch (GuzzleException|\Exception $exception) {
             //回滚事务
             Db::rollBack();
-            dump('更新微博热榜异常：' . $exception->getMessage());
+            dump('更' . self::type . '榜异常：' . $exception->getMessage());
             dump($exception);
         }
     }

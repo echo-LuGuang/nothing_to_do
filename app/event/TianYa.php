@@ -76,7 +76,7 @@ class TianYa
         } catch (GuzzleException|\Exception $exception) {
             //回滚事务
             Db::rollBack();
-            dump('更新天涯热榜异常：' . $exception->getMessage());
+            dump('更新' . self::type . '异常：' . $exception->getMessage());
             dump($exception);
         }
     }
