@@ -2,27 +2,30 @@
 
 /**
  * 将时间转化为时间段
- * @param $now
+ * @param string $now
  * @return string
  */
-function parseTimeLine($now): string
+function parseTimeLine(string $now): string
 {
-    $time_line = time() - strtotime($now);
-    if ($time_line <= 0) {
-        return '刚刚';
-    } elseif ($time_line < 60) {
-        return $time_line . '秒前';
-    } elseif ($time_line < 60 * 60) {
-        return floor($time_line / 60) . '分钟前';
-    } elseif ($time_line < 60 * 60 * 24) {
-        return floor($time_line / (60 * 60)) . '小时前';
-    } elseif ($time_line < 60 * 60 * 24 * 7) {
-        return floor($time_line / (60 * 60 * 24)) . '天前';
-    } elseif ($time_line < 60 * 60 * 24 * 7 * 4) {
-        return floor($time_line / (60 * 60 * 24 * 7)) . '周前';
-    } elseif ($time_line < 60 * 60 * 24 * 7 * 4 * 12) {
-        return floor($time_line / (60 * 60 * 24 * 7 * 4)) . '个月前';
-    } else {
-        return floor($time_line / (60 * 60 * 24 * 7 * 4 * 12)) . '年前';
+    try {
+        $now = new DateTime($now);
+
+        $diff = $now->diff(new DateTime());
+
+        if ($diff->y > 0) {
+            return $diff->y . '年前';
+        } elseif ($diff->m > 0) {
+            return $diff->m . '个月前';
+        } elseif ($diff->d > 0) {
+            return $diff->d . '天前';
+        } elseif ($diff->h > 0) {
+            return $diff->h . '小时前';
+        } elseif ($diff->i > 0) {
+            return $diff->i . '分钟前';
+        } else {
+            return '刚刚';
+        }
+    } catch (Exception $exception) {
+        return '未知';
     }
 }
