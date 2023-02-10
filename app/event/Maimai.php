@@ -42,10 +42,16 @@ class Maimai
             foreach ($data['list'] as $value) {
 
                 if (isset($value['style1'])) {
-                    $title = mb_substr($value['style1']['text'], 0, 255);
+                    $title = $value['style1']['text'];
+                    if (mb_strlen($title) > 150) {
+                        $title = mb_substr($title, 0, 150) . '...';
+                    }
                     $url = 'https://maimai.cn/web/feed_detail?fid=' . $value['id'] . '&efid=' . $value['efid'];
                 } else if (isset($value['style44'])) {
-                    $title = mb_substr($value['style44']['text'], 0, 255);
+                    $title = $value['style44']['text'];
+                    if (mb_strlen($title) > 150) {
+                        $title = mb_substr($title, 0, 150) . '...';
+                    }
                     $url = $value['style44']['share_url'];
                 } else {
                     //其他的类型是广告
