@@ -4,10 +4,9 @@
 
 这是一个基于[webman](https://www.workerman.net/webman)的爬虫项目，非常适合php框架的初学者学习，亦可用作毕业设计。
 
-爬取内容：今日头条、微博、虎扑、知乎、B站、天涯等第三方网站的热点事件等。只能用作学习，切勿违法。
+爬取内容：今日头条、微博、虎扑、知乎、B站、天涯等第三方网站的热点事件等，只用作学习。
 
 提供[线上api接口文档](https://github.com/echo-LuGuang/nothing_to_do/blob/main/public/api.md)供前端初学者学习使用。
-
 
 ````
 php7.4
