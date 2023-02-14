@@ -111,7 +111,7 @@ class IndexController extends BaseController
         foreach ($this->cate as $item) {
             $item['time'] = parseTimeLine(Redis::get($item['type'] . 'time'));
             $res = $this->detail($item['type']);
-            $item['list'] = json_decode($res->rawBody(), true)['data'];
+            $item['list'] = json_decode($res->rawBody(), true)['data']['list'];
             $data[] = $item;
         }
 
@@ -130,12 +130,14 @@ class IndexController extends BaseController
 
         $data = Redis::get($name);
 
+        $time = parseTimeLine(Redis::get($name . 'time'));
+
         if (!empty($data)) {
             $data = json_decode($data, true);
         } else {
             $data = Article::query()->where('type', $name)->orderBy('id')->get();
         }
 
-        return $this->success($data);
+        return $this->success(['list' => $data, 'time' => $time]);
     }
 }
