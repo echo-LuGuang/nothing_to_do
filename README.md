@@ -6,6 +6,9 @@
 
 爬取内容：今日头条、微博、虎扑、知乎、B站、天涯等第三方网站的热点事件等。只能用作学习，切勿违法。
 
+提供[线上api接口文档](https://github.com/echo-LuGuang/nothing_to_do/blob/main/public/api.md)供前端初学者学习使用。
+
+
 ````
 php7.4
 mysql
