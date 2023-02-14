@@ -5,6 +5,7 @@ use app\event\BaiDu;
 use app\event\Bilibili;
 use app\event\BilibiliHot;
 use app\event\DouBan;
+use app\event\GitHub;
 use app\event\HuPu;
 use app\event\Itzhijia;
 use app\event\Maimai;
@@ -79,5 +80,10 @@ return [
     //v2ex
     V2ex::type => [
         [V2ex::class, 'update']
+    ],
+
+    //github
+    GitHub::type => [
+        [GitHub::class, 'update']
     ],
 ];

@@ -6,6 +6,7 @@ use app\event\BaiDu;
 use app\event\Bilibili;
 use app\event\BilibiliHot;
 use app\event\DouBan;
+use app\event\GitHub;
 use app\event\HuPu;
 use app\event\Itzhijia;
 use app\event\Maimai;
@@ -88,12 +89,17 @@ class IndexController extends BaseController
             'name' => 'V2ex',
             'color' => '#272727'
         ],
+        [
+            'type' => GitHub::type,
+            'name' => 'GitHub热榜',
+            'color' => '#282a2d'
+        ],
     ];
 
     public function test(): Response
     {
         //发布事件
-        Event::emit(V2ex::type, null);
+        Event::emit(GitHub::type, null);
         return $this->success();
     }
 
