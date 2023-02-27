@@ -10,6 +10,7 @@ use app\event\HuPu;
 use app\event\Itzhijia;
 use app\event\JueJin;
 use app\event\Maimai;
+use app\event\TengXun;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
@@ -91,5 +92,10 @@ return [
     //github
     JueJin::type => [
         [JueJin::class, 'update']
+    ],
+
+    //腾讯
+    TengXun::type => [
+        [TengXun::class, 'update']
     ],
 ];

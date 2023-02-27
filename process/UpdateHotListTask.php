@@ -11,6 +11,7 @@ use app\event\HuPu;
 use app\event\Itzhijia;
 use app\event\JueJin;
 use app\event\Maimai;
+use app\event\TengXun;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
@@ -38,6 +39,9 @@ class UpdateHotListTask
 
             dump(date('Y-m-d H:i:s') . '更新' . WeiBo::type . '开始');
             Event::emit(WeiBo::type, null);
+
+            dump(date('Y-m-d H:i:s') . '更新' . TengXun::type . '开始');
+            Event::emit(TengXun::type, null);
         });
 
 

@@ -11,6 +11,7 @@ use app\event\HuPu;
 use app\event\Itzhijia;
 use app\event\JueJin;
 use app\event\Maimai;
+use app\event\TengXun;
 use app\event\TianYa;
 use app\event\Tieba;
 use app\event\TouTiao;
@@ -54,6 +55,11 @@ class IndexController extends BaseController
             'type' => TouTiao::type,
             'name' => '今日头条',
             'color' => '#FF2F49'
+        ],
+        [
+            'type' => TengXun::type,
+            'name' => '腾讯新闻',
+            'color' => '#204fca'
         ],
         [
             'type' => DouBan::type,
@@ -105,7 +111,7 @@ class IndexController extends BaseController
     public function test(): Response
     {
         //发布事件
-        Event::emit(JueJin::type, null);
+        Event::emit(TengXun::type, null);
         return $this->success();
     }
 
