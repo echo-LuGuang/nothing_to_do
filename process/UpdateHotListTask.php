@@ -9,6 +9,7 @@ use app\event\DouBan;
 use app\event\GitHub;
 use app\event\HuPu;
 use app\event\Itzhijia;
+use app\event\JueJin;
 use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
@@ -83,6 +84,9 @@ class UpdateHotListTask
 
             dump(date('Y-m-d H:i:s') . '更新' . GitHub::type . '开始');
             Event::emit(GitHub::type, null);
+
+            dump(date('Y-m-d H:i:s') . '更新' . JueJin::type . '开始');
+            Event::emit(JueJin::type, null);
         });
 
     }
