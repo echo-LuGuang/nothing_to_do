@@ -8,6 +8,7 @@ use app\event\DouBan;
 use app\event\GitHub;
 use app\event\HuPu;
 use app\event\Itzhijia;
+use app\event\JueJin;
 use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
@@ -85,5 +86,10 @@ return [
     //github
     GitHub::type => [
         [GitHub::class, 'update']
+    ],
+
+    //github
+    JueJin::type => [
+        [JueJin::class, 'update']
     ],
 ];

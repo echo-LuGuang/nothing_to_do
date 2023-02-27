@@ -9,6 +9,7 @@ use app\event\DouBan;
 use app\event\GitHub;
 use app\event\HuPu;
 use app\event\Itzhijia;
+use app\event\JueJin;
 use app\event\Maimai;
 use app\event\TianYa;
 use app\event\Tieba;
@@ -94,12 +95,17 @@ class IndexController extends BaseController
             'name' => 'GitHub热榜',
             'color' => '#282a2d'
         ],
+        [
+            'type' => JueJin::type,
+            'name' => '掘金',
+            'color' => '#3f7ef7'
+        ],
     ];
 
     public function test(): Response
     {
         //发布事件
-        Event::emit(GitHub::type, null);
+        Event::emit(JueJin::type, null);
         return $this->success();
     }
 
