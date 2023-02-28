@@ -43,7 +43,11 @@ class TengXun
 
                 $title = $item['title'];
                 $url = $host . $item['hotEvent']['id'];
-                $subtitle = $item['comments'];
+                if ($item['articletype'] === '0') {
+                    $subtitle = $item['readCount'];
+                } elseif ($item['articletype'] == '4') {
+                    $subtitle = $item['video_channel']['video']['playcount'];
+                }
 
                 $insertData[] = [
                     'title' => $title,
