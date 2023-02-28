@@ -16,7 +16,7 @@ return [
     'listen' => 'http://0.0.0.0:8005',
     'transport' => 'tcp',
     'context' => [],
-    'name' => 'jlxsc',
+    'name' => 'hot',
     'count' => cpu_count() * 4,
     'user' => '',
     'group' => '',
