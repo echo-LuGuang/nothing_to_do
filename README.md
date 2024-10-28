@@ -6,10 +6,8 @@
 
 爬取内容：今日头条、微博、虎扑、知乎、B站、天涯等第三方网站的热点事件等，只用作学习。
 
-[//]: # (提供[线上api接口文档]&#40;https://github.com/echo-LuGuang/nothing_to_do/blob/main/public/api.md&#41;供前端初学者学习使用。)
-
 ````
-php7.4
+php8.x
 mysql
 redis
 Crontab定时任务

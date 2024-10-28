@@ -27,10 +27,8 @@ use Twig\Error\SyntaxError;
 use Webman\App;
 use Webman\Config;
 use Webman\Route;
+use Workerman\Protocols\Http\Session;
 use Workerman\Worker;
-
-// Webman version
-const WEBMAN_VERSION = '1.4';
 
 // Project base path
 define('BASE_PATH', dirname(__DIR__));
@@ -75,13 +73,23 @@ function app_path(string $path = ''): string
 /**
  * Public path
  * @param string $path
+ * @param string|null $plugin
  * @return string
  */
-function public_path(string $path = ''): string
+function public_path(string $path = '', string $plugin = null): string
 {
-    static $publicPath = '';
-    if (!$publicPath) {
-        $publicPath = \config('app.public_path') ?: run_path('public');
+    static $publicPaths = [];
+    $plugin = $plugin ?? '';
+    if (isset($publicPaths[$plugin])) {
+        $publicPath = $publicPaths[$plugin];
+    } else {
+        $prefix = $plugin ? "plugin.$plugin." : '';
+        $pathPrefix = $plugin ? 'plugin' . DIRECTORY_SEPARATOR . $plugin . DIRECTORY_SEPARATOR : '';
+        $publicPath = \config("{$prefix}app.public_path", run_path("{$pathPrefix}public"));
+        if (count($publicPaths) > 32) {
+            $publicPaths = [];
+        }
+        $publicPaths[$plugin] = $publicPath;
     }
     return path_combine($publicPath, $path);
 }
@@ -192,14 +200,15 @@ function redirect(string $location, int $status = 302, array $headers = []): Res
  * @param string $template
  * @param array $vars
  * @param string|null $app
+ * @param string|null $plugin
  * @return Response
  */
-function view(string $template, array $vars = [], string $app = null): Response
+function view(string $template, array $vars = [], string $app = null, string $plugin = null): Response
 {
     $request = \request();
-    $plugin = $request->plugin ?? '';
+    $plugin = $plugin === null ? ($request->plugin ?? '') : $plugin;
     $handler = \config($plugin ? "plugin.$plugin.view.handler" : 'view.handler');
-    return new Response(200, [], $handler::render($template, $vars, $app));
+    return new Response(200, [], $handler::render($template, $vars, $app, $plugin));
 }
 
 /**
@@ -245,9 +254,6 @@ function think_view(string $template, array $vars = [], string $app = null): Res
  * @param array $vars
  * @param string|null $app
  * @return Response
- * @throws LoaderError
- * @throws RuntimeError
- * @throws SyntaxError
  */
 function twig_view(string $template, array $vars = [], string $app = null): Response
 {
@@ -302,7 +308,7 @@ function route(string $name, ...$parameters): string
  * Session
  * @param mixed $key
  * @param mixed $default
- * @return mixed
+ * @return mixed|bool|Session
  */
 function session($key = null, $default = null)
 {
@@ -381,7 +387,7 @@ function copy_dir(string $source, string $dest, bool $overwrite = false)
         $files = scandir($source);
         foreach ($files as $file) {
             if ($file !== "." && $file !== "..") {
-                copy_dir("$source/$file", "$dest/$file");
+                copy_dir("$source/$file", "$dest/$file", $overwrite);
             }
         }
     } else if (file_exists($source) && ($overwrite || !file_exists($dest))) {
@@ -421,7 +427,8 @@ function worker_bind($worker, $class)
         'onBufferFull',
         'onBufferDrain',
         'onWorkerStop',
-        'onWebSocketConnect'
+        'onWebSocketConnect',
+        'onWorkerReload'
     ];
     foreach ($callbackMap as $name) {
         if (method_exists($class, $name)) {
@@ -510,8 +517,23 @@ function cpu_count(): int
         if (strtolower(PHP_OS) === 'darwin') {
             $count = (int)shell_exec('sysctl -n machdep.cpu.core_count');
         } else {
-            $count = (int)shell_exec('nproc');
+            try {
+                $count = (int)shell_exec('nproc');
+            } catch (\Throwable $ex) {
+                // Do nothing
+            }
         }
     }
     return $count > 0 ? $count : 4;
+}
+
+/**
+ * Get request parameters, if no parameter name is passed, an array of all values is returned, default values is supported
+ * @param string|null $param param's name
+ * @param mixed|null $default default value
+ * @return mixed|null
+ */
+function input(string $param = null, $default = null)
+{
+    return is_null($param) ? request()->all() : request()->input($param, $default);
 }
